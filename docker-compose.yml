@@ -1,0 +1,14 @@
+version: '3.4'
+
+services:
+  productservice:
+    image: ${DOCKER_REGISTRY-}productservice
+    build:
+      context: .
+      dockerfile: Microservices/ProductService/Dockerfile
+  postgres:
+    image: postgres:16.0
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres

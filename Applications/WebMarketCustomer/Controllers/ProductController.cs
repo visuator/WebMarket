@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
+using WebMarketCustomer.Models;
+
 namespace WebMarketCustomer.Controllers
 {
     [ApiController]
@@ -7,13 +9,19 @@ namespace WebMarketCustomer.Controllers
     public class ProductController : ControllerBase
     {
         [HttpGet()]
-        public async Task<IActionResult> FindProducts()
+        public async Task<IActionResult> FindProducts([FromQuery] FindProductsModel model, CancellationToken token = default)
         {
             return Ok();
         }
 
-        [HttpPost()]
-        public async Task<IActionResult> AddToCart()
+        [HttpGet()]
+        public async Task<IActionResult> GetCart([FromQuery] GetCartProductsModel model, CancellationToken token = default)
+        {
+            return Ok();
+        }
+
+        [HttpPost("{productId}")]
+        public async Task<IActionResult> AddToCart([FromRoute] Guid productId, CancellationToken token = default)
         {
             return Ok();
         }

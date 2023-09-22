@@ -1,25 +1,33 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
+using WebMarketCustomer.Models;
+
 namespace WebMarketCustomer.Controllers
 {
     [ApiController]
-    [Route("api/order")]
+    [Route("api/orders")]
     public class OrderController : ControllerBase
     {
         [HttpPost()]
-        public async Task<IActionResult> CreateOrder()
+        public async Task<IActionResult> CreateOrder([FromBody] CreateOrderModel model, CancellationToken token = default)
         {
             return Ok();
         }
 
-        [HttpPost()]
-        public async Task<IActionResult> GetOrder()
+        [HttpGet("{orderId}")]
+        public async Task<IActionResult> GetOrderStatus([FromRoute] Guid orderId, CancellationToken token = default)
         {
             return Ok();
         }
 
-        [HttpDelete()]
-        public async Task<IActionResult> CancelOrder()
+        [HttpPost("{orderId}")]
+        public async Task<IActionResult> ReceiveOrder([FromRoute] Guid orderId, CancellationToken token = default)
+        {
+            return Ok();
+        }
+
+        [HttpDelete("{orderId}")]
+        public async Task<IActionResult> CancelOrder([FromRoute] Guid orderId, CancellationToken token = default)
         {
             return Ok();
         }
