@@ -1,4 +1,6 @@
-﻿namespace OrderService.Entities
+﻿using WebMarket.Common.Entities;
+
+namespace OrderService.Entities
 {
     public class OrderProduct : BaseEntity
     {

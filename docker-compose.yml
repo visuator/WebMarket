@@ -21,6 +21,21 @@ services:
     build:
       context: .
       dockerfile: Microservices/UserService/Dockerfile
+  webmarketseller:
+    image: ${DOCKER_REGISTRY-}webmarketseller
+    build:
+      context: .
+      dockerfile: Applications/WebMarketSeller/Dockerfile
+  webmarketdelivery:
+    image: ${DOCKER_REGISTRY-}webmarketdelivery
+    build:
+      context: .
+      dockerfile: Applications/WebMarketDelivery/Dockerfile
+  webmarketcustomer:
+    image: ${DOCKER_REGISTRY-}webmarketcustomer
+    build:
+      context: .
+      dockerfile: Applications/WebMarketCustomer/Dockerfile
   rabbitmq:
     image: rabbitmq:3-management
     ports:

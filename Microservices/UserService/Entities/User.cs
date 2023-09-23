@@ -1,6 +1,8 @@
-﻿namespace UserService.Entities
+﻿using WebMarket.Common.Entities;
+
+namespace UserService.Entities
 {
-    public class User : BaseEntity
+    public class User : BaseEntity, ISingleKeyEntity
     {
         public Guid Id { get; set; }
         public string FullName { get; set; }

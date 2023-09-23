@@ -2,8 +2,9 @@
 
 using OrderService.Entities;
 
-using System.Linq.Expressions;
 using System.Reflection;
+
+using WebMarket.Common.Services;
 
 namespace OrderService.Storages
 {
@@ -18,13 +19,7 @@ namespace OrderService.Storages
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            var assembly = Assembly.Load("OrderService");
-            var baseEntities = assembly.DefinedTypes.Where(x => x.BaseType is not null && x.BaseType == typeof(BaseEntity));
-            Expression<Func<BaseEntity, bool>> predicate = (be) => !be.IsDeleted;
-            foreach (var be in baseEntities)
-                modelBuilder.Entity(be, x => x.HasQueryFilter(predicate));
-            base.OnModelCreating(modelBuilder);
-
+            modelBuilder.ApplyQueryFilters(Assembly.GetExecutingAssembly());
             modelBuilder.Entity<OrderProduct>().HasKey(x => new { x.OrderId, x.ProductId });
         }
     }

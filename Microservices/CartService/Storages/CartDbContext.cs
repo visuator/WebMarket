@@ -5,6 +5,8 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 using System.Reflection;
 
+using WebMarket.Common.Services;
+
 namespace CartService.Storages
 {
     public class CartDbContext : DbContext
@@ -17,11 +19,8 @@ namespace CartService.Storages
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            var assembly = Assembly.Load("CartService");
-            var baseEntities = assembly.DefinedTypes.Where(x => x.BaseType is not null && x.BaseType == typeof(BaseEntity));
-            Expression<Func<BaseEntity, bool>> predicate = (be) => !be.IsDeleted;
-            foreach (var be in baseEntities)
-                modelBuilder.Entity(be, x => x.HasQueryFilter(predicate));
+            modelBuilder.ApplyQueryFilters(Assembly.GetExecutingAssembly());
+            modelBuilder.Entity<UserProduct>().HasKey(x => new { x.UserId, x.ProductId });
             base.OnModelCreating(modelBuilder);
         }
     }

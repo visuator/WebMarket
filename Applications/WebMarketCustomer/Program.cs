@@ -1,5 +1,7 @@
 using MassTransit;
 
+using System.Reflection;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
@@ -8,11 +10,9 @@ builder.Services.AddSwaggerGen();
 builder.Services.Configure<RabbitMqTransportOptions>(builder.Configuration.GetSection("RabbitMq").Bind);
 builder.Services.AddMassTransit(opt =>
 {
-    opt.UsingRabbitMq((ctx, rabbitMq) =>
-    {
-        rabbitMq.ConfigureEndpoints(ctx);
-    });
+    opt.UsingRabbitMq();
 });
+builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
 var app = builder.Build();
 

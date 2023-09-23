@@ -13,17 +13,5 @@ namespace WebMarketCustomer.Controllers
         {
             return Ok();
         }
-
-        [HttpGet()]
-        public async Task<IActionResult> GetCart([FromQuery] GetCartProductsModel model, CancellationToken token = default)
-        {
-            return Ok();
-        }
-
-        [HttpPost("{productId}")]
-        public async Task<IActionResult> AddToCart([FromRoute] Guid productId, CancellationToken token = default)
-        {
-            return Ok();
-        }
     }
 }

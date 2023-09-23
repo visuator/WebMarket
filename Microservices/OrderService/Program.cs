@@ -2,12 +2,14 @@ using MassTransit;
 
 using Microsoft.EntityFrameworkCore;
 
-using OrderService.Services;
 using OrderService.Storages;
+
+using WebMarket.Common.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddLogging();
+builder.Services.AddHostedService<DbInitHostedService<OrderDbContext>>();
 builder.Services.AddDbContext<OrderDbContext>(opt =>
 {
     var connection = builder.Configuration.GetConnectionString("Database");

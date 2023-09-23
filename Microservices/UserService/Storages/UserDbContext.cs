@@ -4,6 +4,9 @@ using System.Linq.Expressions;
 using System.Reflection;
 
 using UserService.Entities;
+using UserService.Services;
+
+using WebMarket.Common.Services;
 
 namespace UserService.Storages
 {
@@ -15,11 +18,8 @@ namespace UserService.Storages
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            var assembly = Assembly.Load("UserService");
-            var baseEntities = assembly.DefinedTypes.Where(x => x.BaseType is not null && x.BaseType == typeof(BaseEntity));
-            Expression<Func<BaseEntity, bool>> predicate = (be) => !be.IsDeleted;
-            foreach (var be in baseEntities)
-                modelBuilder.Entity(be, x => x.HasQueryFilter(predicate));
+            Database.MigrateAsync();
+            modelBuilder.ApplyQueryFilters(Assembly.GetExecutingAssembly());
             base.OnModelCreating(modelBuilder);
         }
     }

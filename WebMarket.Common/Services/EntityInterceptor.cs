@@ -2,9 +2,9 @@
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 
-using ProductService.Entities;
+using WebMarket.Common.Entities;
 
-namespace ProductService.Services
+namespace WebMarket.Common.Services
 {
     public class EntityInterceptor : SaveChangesInterceptor
     {

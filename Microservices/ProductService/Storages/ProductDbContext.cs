@@ -5,6 +5,8 @@ using ProductService.Entities;
 using System.Linq.Expressions;
 using System.Reflection;
 
+using WebMarket.Common.Services;
+
 namespace ProductService.Storages
 {
     public class ProductDbContext : DbContext
@@ -17,11 +19,7 @@ namespace ProductService.Storages
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            var assembly = Assembly.Load("ProductService");
-            var baseEntities = assembly.DefinedTypes.Where(x => x.BaseType is not null && x.BaseType == typeof(BaseEntity));
-            Expression<Func<BaseEntity, bool>> predicate = (be) => !be.IsDeleted;
-            foreach (var be in baseEntities)
-                modelBuilder.Entity(be, x => x.HasQueryFilter(predicate));
+            modelBuilder.ApplyQueryFilters(Assembly.GetExecutingAssembly());
             base.OnModelCreating(modelBuilder);
         }
     }

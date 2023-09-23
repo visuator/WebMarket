@@ -1,6 +1,8 @@
-﻿namespace ProductService.Entities
+﻿using WebMarket.Common.Entities;
+
+namespace ProductService.Entities
 {
-    public class Product : BaseEntity
+    public class Product : BaseEntity, ISingleKeyEntity
     {
         public Guid Id { get; set; }
         public string Name { get; set; }

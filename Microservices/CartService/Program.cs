@@ -1,12 +1,15 @@
-using CartService.Services;
 using CartService.Storages;
 
 using MassTransit;
 
 using Microsoft.EntityFrameworkCore;
 
+using WebMarket.Common.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddLogging();
+builder.Services.AddHostedService<DbInitHostedService<CartDbContext>>();
 builder.Services.AddDbContext<CartDbContext>(opt =>
 {
     var connection = builder.Configuration.GetConnectionString("Database");
