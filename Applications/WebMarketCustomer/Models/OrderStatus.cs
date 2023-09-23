@@ -1,6 +1,6 @@
 ﻿namespace WebMarketCustomer.Models
 {
-    public enum OrderStatuses
+    public enum OrderStatus
     {
         Created,
         Proccessing,

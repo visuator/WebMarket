@@ -9,5 +9,7 @@
         public double Price { get; set; }
         public Guid BrandId { get; set; }
         public Brand Brand { get; set; }
+        public Guid UserId { get; set; }
+        public User User { get; set; }
     }
 }

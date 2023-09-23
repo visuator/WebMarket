@@ -2,7 +2,7 @@
 {
     public class OrderStatusModel
     {
-        public OrderStatuses Status { get; set; }
+        public OrderStatus Status { get; set; }
         public DateTime Updated { get; set; }
     }
 }

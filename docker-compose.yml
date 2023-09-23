@@ -6,6 +6,25 @@ services:
     build:
       context: .
       dockerfile: Microservices/ProductService/Dockerfile
+  orderservice:
+    image: ${DOCKER_REGISTRY-}orderservice
+    build:
+      context: .
+      dockerfile: Microservices/OrderService/Dockerfile
+  cartservice:
+    image: ${DOCKER_REGISTRY-}cartservice
+    build:
+      context: .
+      dockerfile: Microservices/CartService/Dockerfile
+  userservice:
+    image: ${DOCKER_REGISTRY-}userservice
+    build:
+      context: .
+      dockerfile: Microservices/UserService/Dockerfile
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+    - 15672:15672
   postgres:
     image: postgres:16.0
     restart: always

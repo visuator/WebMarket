@@ -1,11 +1,11 @@
-using Microsoft.EntityFrameworkCore;
+using CartService.Services;
+using CartService.Storages;
 
-using OrderService.Services;
-using OrderService.Storages;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddDbContext<OrderDbContext>(opt =>
+builder.Services.AddDbContext<CartDbContext>(opt =>
 {
     var connection = builder.Configuration.GetConnectionString("Database");
     opt.UseNpgsql(connection);
