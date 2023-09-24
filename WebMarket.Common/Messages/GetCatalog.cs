@@ -8,5 +8,6 @@ namespace WebMarket.Common.Messages
 {
     public class GetCatalog
     {
+        public Guid UserId { get; set; }
     }
 }

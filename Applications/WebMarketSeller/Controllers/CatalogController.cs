@@ -1,4 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using MassTransit;
+
+using Microsoft.AspNetCore.Mvc;
+
+using WebMarket.Common.Messages;
 
 namespace WebMarketSeller.Controllers
 {
@@ -6,10 +10,18 @@ namespace WebMarketSeller.Controllers
     [Route("api/catalog")]
     public class CatalogController : ControllerBase
     {
-        [HttpGet()]
-        public async Task<IActionResult> Get()
+        private readonly IBus _bus;
+
+        public CatalogController(IBus bus)
         {
-            return Ok();
+            _bus = bus;
+        }
+
+        [HttpGet()]
+        public async Task<IActionResult> Get(CancellationToken token = default)
+        {
+            var result = await _bus.Request<GetCatalog, GetCatalogResult>(new GetCatalog(), token);
+            return Ok(result.Message);
         }
     }
 }

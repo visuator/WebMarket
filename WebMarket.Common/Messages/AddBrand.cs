@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace WebMarket.Common.Messages
 {
-    public class AddBrand
+    public class AddBrand : IUserUid
     {
+        public Guid UserId { get; set; }
+        public string Name { get; set; }
     }
 }
