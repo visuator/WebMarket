@@ -23,5 +23,12 @@ namespace UserService.Services
             var salt = Convert.FromBase64String(base64Salt);
             return Convert.ToBase64String(KeyDerivation.Pbkdf2(source, salt, _algorithm, _iterationsCount, _length));
         }
+
+        public static string RandomToken()
+        {
+            var salt = new byte[32];
+            RandomNumberGenerator.Fill(salt);
+            return Convert.ToBase64String(salt);
+        }
     }
 }

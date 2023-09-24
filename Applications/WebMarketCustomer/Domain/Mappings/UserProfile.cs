@@ -11,6 +11,7 @@ namespace WebMarketCustomer.Domain.Mappings
         public UserProfile()
         {
             CreateMap<CreateUserModel, CreateUser>();
+            CreateMap<LoginUserModel, LoginUser>();
         }
     }
 }

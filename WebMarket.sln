@@ -7,23 +7,23 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Applications", "Application
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Microservices", "Microservices", "{A127181B-F813-499B-8084-E50C5295E2FB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebMarketCustomer", "Applications\WebMarketCustomer\WebMarketCustomer.csproj", "{A0BA895A-ABA2-4DCB-8FE1-CD6B946CCAB8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebMarket", "Applications\WebMarketCustomer\WebMarket.csproj", "{A0BA895A-ABA2-4DCB-8FE1-CD6B946CCAB8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebMarketSeller", "Applications\WebMarketSeller\WebMarketSeller.csproj", "{7B138415-B1E1-4A0C-96BE-A5640A7ACBC3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebMarketSeller", "Applications\WebMarketSeller\WebMarketSeller.csproj", "{7B138415-B1E1-4A0C-96BE-A5640A7ACBC3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebMarketDelivery", "Applications\WebMarketDelivery\WebMarketDelivery.csproj", "{E2E776AD-3723-49AA-A204-73036D72E16E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebMarketDelivery", "Applications\WebMarketDelivery\WebMarketDelivery.csproj", "{E2E776AD-3723-49AA-A204-73036D72E16E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrderService", "Microservices\OrderService\OrderService.csproj", "{632A1B85-858C-4296-B4B6-FBF74A3DEA00}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrderService", "Microservices\OrderService\OrderService.csproj", "{632A1B85-858C-4296-B4B6-FBF74A3DEA00}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProductService", "Microservices\ProductService\ProductService.csproj", "{C3FCAD5E-DDFE-4C94-9D9E-B6D4EB58BA8E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProductService", "Microservices\ProductService\ProductService.csproj", "{C3FCAD5E-DDFE-4C94-9D9E-B6D4EB58BA8E}"
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{894671ED-4FC3-4AAF-AEC2-4F1103BE074B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CartService", "Microservices\CartService\CartService.csproj", "{D9BC1B2E-C534-4B8D-AAD7-5BC2433955A1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CartService", "Microservices\CartService\CartService.csproj", "{D9BC1B2E-C534-4B8D-AAD7-5BC2433955A1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserService", "Microservices\UserService\UserService.csproj", "{743522E7-6EFC-4C6F-8200-E7F6452EA778}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UserService", "Microservices\UserService\UserService.csproj", "{743522E7-6EFC-4C6F-8200-E7F6452EA778}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebMarket.Common", "WebMarket.Common\WebMarket.Common.csproj", "{4B2B9349-EF06-4060-9E13-3BFEDDB2EEE6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebMarket.Common", "WebMarket.Common\WebMarket.Common.csproj", "{4B2B9349-EF06-4060-9E13-3BFEDDB2EEE6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

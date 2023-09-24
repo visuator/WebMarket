@@ -19,14 +19,5 @@ namespace UserService.Domain
         {
             await _userService.Create(context.Message, context.CancellationToken);
         }
-
-        public class Definition : ConsumerDefinition<CreateUserConsumer>
-        {
-            protected override void ConfigureConsumer(IReceiveEndpointConfigurator endpointConfigurator, IConsumerConfigurator<CreateUserConsumer> consumerConfigurator, IRegistrationContext context)
-            {
-                endpointConfigurator.UseInMemoryOutbox(context);
-                base.ConfigureConsumer(endpointConfigurator, consumerConfigurator, context);
-            }
-        }
     }
 }
