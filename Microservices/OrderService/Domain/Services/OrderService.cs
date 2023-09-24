@@ -16,7 +16,7 @@ namespace OrderService.Domain.Services
     {
         private readonly OrderDbContext _dbContext;
         private readonly IMapper _mapper;
-        private readonly ILogger<OrderService> _logger; 
+        private readonly ILogger<OrderService> _logger;
 
         public OrderService(OrderDbContext dbContext, IMapper mapper, ILogger<OrderService> logger)
         {

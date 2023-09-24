@@ -1,5 +1,3 @@
-using MassTransit;
-
 using OrderService.Domain;
 using OrderService.Domain.Services;
 using OrderService.Storages;

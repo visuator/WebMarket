@@ -1,6 +1,4 @@
-﻿using WebMarket.Common.Infrastructure;
-
-namespace WebMarketDelivery.Models
+﻿namespace WebMarketDelivery.Models
 {
     public class GetCarrierOrdersModel
     {
