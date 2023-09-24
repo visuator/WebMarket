@@ -1,18 +1,14 @@
-using MassTransit;
-
-using System.Reflection;
+using WebMarket.Common.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.Configure<RabbitMqTransportOptions>(builder.Configuration.GetSection("RabbitMq").Bind);
-builder.Services.AddMassTransit(opt =>
-{
-    opt.UsingRabbitMq();
-});
+
+builder.ConfigureAuthentication();
+builder.ConfigureInfrastructure();
+builder.ConfigureMassTransit();
 
 var app = builder.Build();
 
@@ -22,8 +18,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseAuthentication();
 app.UseAuthorization();
-
 app.MapControllers();
 
 app.Run();

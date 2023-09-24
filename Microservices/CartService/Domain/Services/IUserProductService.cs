@@ -1,6 +1,4 @@
-﻿using CartService.Entities;
-
-using WebMarket.Common.Messages;
+﻿using WebMarket.Common.Messages;
 
 namespace CartService.Domain.Services
 {

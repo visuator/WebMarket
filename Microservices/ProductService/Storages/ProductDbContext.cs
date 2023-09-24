@@ -2,7 +2,6 @@
 
 using ProductService.Entities;
 
-using System.Linq.Expressions;
 using System.Reflection;
 
 using WebMarket.Common.Services;

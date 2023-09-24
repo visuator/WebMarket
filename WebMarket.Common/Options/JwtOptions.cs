@@ -2,7 +2,7 @@
 
 using System.Text;
 
-namespace UserService.Options
+namespace WebMarket.Common.Options
 {
     public class JwtOptions
     {

@@ -8,11 +8,11 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 
 using UserService.Entities;
-using UserService.Options;
 using UserService.Services;
 using UserService.Storages;
 
 using WebMarket.Common.Messages;
+using WebMarket.Common.Options;
 
 namespace UserService.Domain.Services
 {

@@ -1,14 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace WebMarket.Common.Services
 {
@@ -34,7 +27,7 @@ namespace WebMarket.Common.Services
                 if (incomingMigrations.Any())
                     await dbContext.Database.MigrateAsync(token);
             }
-            catch(Exception e) { logger.LogError("Db migration fault: {exception}", e.Message); }
+            catch (Exception e) { logger.LogError("Db migration fault: {exception}", e.Message); }
             semaphore.Release();
         }
 

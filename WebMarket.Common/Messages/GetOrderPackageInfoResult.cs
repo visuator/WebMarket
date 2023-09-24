@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace WebMarket.Common.Messages
+﻿namespace WebMarket.Common.Messages
 {
     public class GetOrderPackageInfoResult
     {
@@ -12,7 +6,7 @@ namespace WebMarket.Common.Messages
         public List<OrderProductDto> Products { get; set; }
         public Guid UserId { get; set; }
         public UserDto User { get; set; }
-        
+
         public class UserDto
         {
             public Guid Id { get; set; }

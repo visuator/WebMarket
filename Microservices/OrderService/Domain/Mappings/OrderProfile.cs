@@ -2,7 +2,6 @@
 
 using OrderService.Entities;
 
-using WebMarket.Common.Enums;
 using WebMarket.Common.Messages;
 
 namespace OrderService.Domain.Mappings

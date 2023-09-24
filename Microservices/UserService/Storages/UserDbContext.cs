@@ -1,10 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-using System.Linq.Expressions;
 using System.Reflection;
 
 using UserService.Entities;
-using UserService.Services;
 
 using WebMarket.Common.Services;
 
