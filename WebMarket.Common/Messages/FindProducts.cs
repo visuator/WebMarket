@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WebMarket.Common.Messages
 {
-    public class FindProducts
+    public class FindProducts : ISupportOrdering
     {
         public bool Descending { get; set; }
         public Guid? CategoryId { get; set; }

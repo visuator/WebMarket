@@ -4,10 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using WebMarket.Common.Enums;
+
 namespace WebMarket.Common.Messages
 {
-    public class BuildOrder
+    public class BuildOrder : StatusOrder
     {
-        public Guid OrderId { get; set; }
+        public override OrderStatus SetTo { get => OrderStatus.Built; }
     }
 }

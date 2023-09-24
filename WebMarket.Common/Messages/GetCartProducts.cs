@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WebMarket.Common.Messages
 {
-    public class GetCartProducts
+    public class GetCartProducts : IUserUid
     {
         public Guid UserId { get; set; }
     }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WebMarket.Common.Messages
 {
-    public class GetOrderPackageInfo
+    public class GetOrderPackageInfo : IOrderUid
     {
         public Guid OrderId { get; set; }
     }
