@@ -1,16 +1,15 @@
 ﻿using AutoMapper;
 
-using ProductService.Entities;
+using CartService.Entities;
 
 using WebMarket.Common.Messages;
 
-namespace ProductService.Domain.Mappings
+namespace CartService.Domain.Mappings
 {
     public class UserProfile : Profile
     {
         public UserProfile()
         {
-            CreateMap<User, FindProductsResult.UserDto>();
             CreateMap<UserCreated, User>();
         }
     }

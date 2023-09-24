@@ -1,7 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using MassTransit;
+using MassTransit.RetryPolicies;
+
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+
+using Polly;
 
 namespace WebMarket.Common.Services
 {
@@ -19,15 +24,16 @@ namespace WebMarket.Common.Services
             await using var scope = _factory.CreateAsyncScope();
             var dbContext = scope.ServiceProvider.GetRequiredService<TDbContext>();
             var logger = scope.ServiceProvider.GetRequiredService<ILogger<DbInitHostedService<TDbContext>>>();
-            var semaphore = new SemaphoreSlim(1, 1);
+
+            using var semaphore = new SemaphoreSlim(1, 1);
             await semaphore.WaitAsync(token);
-            try
+
+            logger.LogInformation("DbContext entry: {name}", typeof(TDbContext).Name);
+            await Policy.Handle<Exception>().WaitAndRetryForeverAsync((i) => TimeSpan.FromMilliseconds(i + 350)).ExecuteAsync(async () =>
             {
-                var incomingMigrations = await dbContext.Database.GetPendingMigrationsAsync(token);
-                if (incomingMigrations.Any())
-                    await dbContext.Database.MigrateAsync(token);
-            }
-            catch (Exception e) { logger.LogError("Db migration fault: {exception}", e.Message); }
+                await dbContext.Database.MigrateAsync(token);
+            });
+
             semaphore.Release();
         }
 

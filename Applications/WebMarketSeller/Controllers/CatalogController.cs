@@ -1,11 +1,13 @@
 ﻿using MassTransit;
 
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 using WebMarket.Common.Messages;
 
 namespace WebMarketSeller.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/catalog")]
     public class CatalogController : ControllerBase

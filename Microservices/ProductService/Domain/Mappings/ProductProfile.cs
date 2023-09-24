@@ -10,7 +10,9 @@ namespace ProductService.Domain.Mappings
     {
         public ProductProfile()
         {
+            CreateMap<AddProduct, Product>();
             CreateMap<Product, FindProductsResult.ProductDto>();
+            CreateMap<Product, ProductCreated>();
         }
     }
 }

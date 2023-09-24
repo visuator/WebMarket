@@ -1,11 +1,13 @@
 ﻿using MassTransit;
 
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 using WebMarket.Common.Messages;
 
 namespace WebMarketDelivery.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/orders")]
     public class OrderController : ControllerBase

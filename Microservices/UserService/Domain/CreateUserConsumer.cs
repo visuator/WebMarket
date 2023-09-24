@@ -1,6 +1,7 @@
 ﻿using MassTransit;
 
 using UserService.Domain.Services;
+using UserService.Entities;
 
 using WebMarket.Common.Messages;
 
@@ -17,7 +18,8 @@ namespace UserService.Domain
 
         public async Task Consume(ConsumeContext<CreateUser> context)
         {
-            await _userService.Create(context.Message, context.CancellationToken);
+            var result = await _userService.Create(context.Message, context.CancellationToken);
+            await context.Publish(result, context.CancellationToken);
         }
     }
 }

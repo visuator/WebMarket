@@ -1,9 +1,11 @@
-﻿using WebMarket.Common.Messages;
+﻿using UserService.Entities;
+
+using WebMarket.Common.Messages;
 
 namespace UserService.Domain.Services
 {
     public interface IUserService
     {
-        Task Create(CreateUser message, CancellationToken token = default);
+        Task<UserCreated> Create(CreateUser message, CancellationToken token = default);
     }
 }

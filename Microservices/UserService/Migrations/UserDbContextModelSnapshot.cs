@@ -55,7 +55,7 @@ namespace UserService.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Session");
+                    b.ToTable("Sessions");
                 });
 
             modelBuilder.Entity("UserService.Entities.User", b =>

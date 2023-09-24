@@ -2,6 +2,7 @@
 
 using MassTransit;
 
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 using WebMarket.Common.Messages;
@@ -10,6 +11,7 @@ using WebMarketSeller.Models;
 
 namespace WebMarketSeller.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/category")]
     public class CategoryController : ControllerBase

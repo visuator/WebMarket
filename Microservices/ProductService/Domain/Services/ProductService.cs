@@ -36,13 +36,15 @@ namespace ProductService.Domain.Services
             return new() { Products = result };
         }
 
-        public async Task Add(AddProduct message, CancellationToken token = default)
+        public async Task<ProductCreated> Add(AddProduct message, CancellationToken token = default)
         {
             var entity = _mapper.Map<Product>(message);
             await _dbContext.Products.AddAsync(entity, token);
             await _dbContext.SaveChangesAsync(token);
 
             _logger.LogInformation("Product added: {id}", entity.Id);
+
+            return _mapper.Map<ProductCreated>(entity);
         }
     }
 }

@@ -17,7 +17,8 @@ namespace ProductService.Domain
 
         public async Task Consume(ConsumeContext<AddProduct> context)
         {
-            await _productService.Add(context.Message, context.CancellationToken);
+            var result = await _productService.Add(context.Message, context.CancellationToken);
+            await context.Publish(result, context.CancellationToken);
         }
     }
 }

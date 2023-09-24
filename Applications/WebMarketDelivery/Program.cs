@@ -1,11 +1,13 @@
+using System.Reflection;
+
 using WebMarket.Common.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.ConfigureApi();
 builder.ConfigureAuthentication();
-builder.ConfigureInfrastructure();
-builder.ConfigureMassTransit();
+builder.ConfigureInfrastructure(Assembly.GetExecutingAssembly());
+builder.ConfigureMassTransit(Assembly.GetExecutingAssembly());
 
 var app = builder.Build();
 

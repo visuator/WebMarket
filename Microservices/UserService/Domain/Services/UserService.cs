@@ -31,18 +31,20 @@ namespace UserService.Domain.Services
             _jwtOptions = jwtOptions.Value;
         }
 
-        public async Task Create(CreateUser message, CancellationToken token = default)
+        public async Task<UserCreated> Create(CreateUser message, CancellationToken token = default)
         {
-            var user = _mapper.Map<CreateUser, User>(message, opt => opt.AfterMap((src, dst) =>
+            var entity = _mapper.Map<CreateUser, User>(message, opt => opt.AfterMap((src, dst) =>
             {
                 var (hash, salt) = HashHelper.Encrypt(src.Password);
                 dst.PasswordHash = hash;
                 dst.PasswordSalt = salt;
             }));
-            await _dbContext.Users.AddAsync(user, token);
+            await _dbContext.Users.AddAsync(entity, token);
             await _dbContext.SaveChangesAsync(token);
 
-            _logger.LogInformation("User created: {id}", user.Id);
+            _logger.LogInformation("User created: {id}", entity.Id);
+
+            return _mapper.Map<UserCreated>(entity);
         }
 
         public async Task<LoginUserResult> Login(LoginUser message, CancellationToken token = default)

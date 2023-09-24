@@ -12,8 +12,8 @@ using ProductService.Storages;
 namespace ProductService.Migrations
 {
     [DbContext(typeof(ProductDbContext))]
-    [Migration("20230924153243_AnotherLinks")]
-    partial class AnotherLinks
+    [Migration("20230924162656_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

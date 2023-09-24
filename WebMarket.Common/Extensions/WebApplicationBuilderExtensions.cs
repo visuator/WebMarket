@@ -1,10 +1,14 @@
 ﻿using MassTransit;
 
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.Net.Http.Headers;
+using Microsoft.OpenApi.Models;
 
 using System.Reflection;
 
@@ -25,7 +29,10 @@ namespace WebMarket.Common.Extensions
                 var options = builder.Configuration.GetSection("JwtOptions").Get<JwtOptions>();
                 if (options is null) throw new Exception("JwtOptions is empty");
 
+                if (builder.Environment.IsDevelopment())
+                    opt.IncludeErrorDetails = true;
                 opt.Audience = options.Audience;
+                opt.ClaimsIssuer = options.Issuer;
                 opt.TokenValidationParameters = new()
                 {
                     ValidateAudience = true,
@@ -40,23 +47,27 @@ namespace WebMarket.Common.Extensions
             });
         }
 
-        public static void ConfigureDbContext<TDbContext>(this WebApplicationBuilder builder) where TDbContext : DbContext
+        public static void ConfigureDbContext<TDbContext>(this WebApplicationBuilder builder, Assembly asm) where TDbContext : DbContext
         {
             builder.Services.AddDbContext<TDbContext>(opt =>
             {
                 var connection = builder.Configuration.GetConnectionString("Database");
-                opt.UseNpgsql(connection);
+                opt.UseNpgsql(connection, npgsql =>
+                {
+                    npgsql.MigrationsAssembly(asm.FullName);
+                });
                 opt.AddInterceptors(new EntityInterceptor());
+
             });
             builder.Services.AddHostedService<DbInitHostedService<TDbContext>>();
         }
 
-        public static void ConfigureMassTransit(this WebApplicationBuilder builder)
+        public static void ConfigureMassTransit(this WebApplicationBuilder builder, Assembly asm)
         {
             builder.Services.Configure<RabbitMqTransportOptions>(builder.Configuration.GetSection("RabbitMq").Bind);
             builder.Services.AddMassTransit(opt =>
             {
-                opt.AddConsumers(Assembly.GetExecutingAssembly());
+                opt.AddConsumers(asm);
                 opt.UsingRabbitMq((ctx, rabbitMq) =>
                 {
                     rabbitMq.ConfigureEndpoints(ctx);
@@ -64,9 +75,9 @@ namespace WebMarket.Common.Extensions
             });
         }
 
-        public static void ConfigureInfrastructure(this WebApplicationBuilder builder)
+        public static void ConfigureInfrastructure(this WebApplicationBuilder builder, Assembly asm)
         {
-            builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
+            builder.Services.AddAutoMapper(asm);
             builder.Services.AddLogging();
         }
 
@@ -78,7 +89,24 @@ namespace WebMarket.Common.Extensions
                 opt.Filters.AddService<AuthenticatedActionFilter>();
             });
             builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
+            builder.Services.AddSwaggerGen(setup =>
+            {
+                var jwtSecurityScheme = new OpenApiSecurityScheme
+                {
+                    Name = HeaderNames.Authorization,
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.Http,
+                    Scheme = JwtBearerDefaults.AuthenticationScheme,
+                    Reference = new OpenApiReference
+                    {
+                        Id = JwtBearerDefaults.AuthenticationScheme,
+                        Type = ReferenceType.SecurityScheme
+                    }
+                };
+
+                setup.AddSecurityDefinition(jwtSecurityScheme.Reference.Id, jwtSecurityScheme);
+                setup.AddSecurityRequirement(new() { { jwtSecurityScheme, Array.Empty<string>() } });
+            });
         }
     }
 }

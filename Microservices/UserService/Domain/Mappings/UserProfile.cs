@@ -13,6 +13,7 @@ namespace UserService.Domain.Mappings
             CreateMap<CreateUser, User>()
                 .ForMember(x => x.PasswordHash, opt => opt.Ignore())
                 .ForMember(x => x.PasswordSalt, opt => opt.Ignore());
+            CreateMap<User, UserCreated>();
         }
     }
 }
