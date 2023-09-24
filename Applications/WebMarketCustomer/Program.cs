@@ -2,10 +2,7 @@ using WebMarket.Common.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-
+builder.ConfigureApi();
 builder.ConfigureAuthentication();
 builder.ConfigureInfrastructure();
 builder.ConfigureMassTransit();

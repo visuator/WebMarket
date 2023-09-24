@@ -1,16 +1,15 @@
 ﻿using AutoMapper;
 
 using ProductService.Entities;
-
 using WebMarket.Common.Messages;
 
 namespace ProductService.Domain.Mappings
 {
-    public class ProductProfile : Profile
+    public class CategoryProfile : Profile
     {
-        public ProductProfile()
+        public CategoryProfile()
         {
-            CreateMap<Product, FindProductsResult.ProductDto>();
+            CreateMap<Category, FindProductsResult.CategoryDto>();
         }
     }
 }

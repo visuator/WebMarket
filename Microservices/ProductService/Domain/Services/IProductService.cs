@@ -4,6 +4,7 @@ namespace ProductService.Domain.Services
 {
     public interface IProductService
     {
-        Task<FindProductsResult> FindProducts(FindProducts model, CancellationToken token = default);
+        Task Add(AddProduct message, CancellationToken token = default);
+        Task<FindProductsResult> FindProducts(FindProducts message, CancellationToken token = default);
     }
 }

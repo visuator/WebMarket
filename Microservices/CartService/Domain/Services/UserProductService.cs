@@ -7,6 +7,7 @@ using CartService.Storages;
 using Microsoft.EntityFrameworkCore;
 
 using WebMarket.Common.Messages;
+using WebMarket.Common.Services;
 
 namespace CartService.Domain.Services
 {
@@ -42,7 +43,7 @@ namespace CartService.Domain.Services
 
         public async Task<GetCartProductsResult> GetAll(GetCartProducts message, CancellationToken token = default)
         {
-            var result = await _dbContext.UserProducts.AsNoTracking().Where(x => x.UserId == message.UserId).ProjectTo<GetCartProductsResult.UserProductDto>(_mapper.ConfigurationProvider).ToListAsync(token);
+            var result = await _dbContext.UserProducts.AsNoTracking().Where(x => x.UserId == message.UserId).ApplyOrdering(x => x.CreatedAt, message).ProjectTo<GetCartProductsResult.UserProductDto>(_mapper.ConfigurationProvider).ToListAsync(token);
             return new() { Products = result };
         }
     }

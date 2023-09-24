@@ -8,6 +8,7 @@ using Microsoft.IdentityModel.Tokens;
 
 using System.Reflection;
 
+using WebMarket.Common.Infrastructure;
 using WebMarket.Common.Options;
 using WebMarket.Common.Services;
 
@@ -67,6 +68,17 @@ namespace WebMarket.Common.Extensions
         {
             builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
             builder.Services.AddLogging();
+        }
+
+        public static void ConfigureApi(this WebApplicationBuilder builder)
+        {
+            builder.Services.AddScoped<AuthenticatedActionFilter>();
+            builder.Services.AddControllers(opt =>
+            {
+                opt.Filters.AddService<AuthenticatedActionFilter>();
+            });
+            builder.Services.AddEndpointsApiExplorer();
+            builder.Services.AddSwaggerGen();
         }
     }
 }

@@ -6,11 +6,11 @@ using WebMarket.Common.Messages;
 
 namespace ProductService.Domain.Mappings
 {
-    public class ProductProfile : Profile
+    public class UserProfile : Profile
     {
-        public ProductProfile()
+        public UserProfile()
         {
-            CreateMap<Product, FindProductsResult.ProductDto>();
+            CreateMap<User, FindProductsResult.UserDto>();
         }
     }
 }

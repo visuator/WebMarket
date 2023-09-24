@@ -12,6 +12,7 @@ namespace WebMarketCustomer.Domain.Mappings
         {
             CreateMap<CreateUserModel, CreateUser>();
             CreateMap<LoginUserModel, LoginUser>();
+            CreateMap<RefreshUserModel, RefreshUser>();
         }
     }
 }

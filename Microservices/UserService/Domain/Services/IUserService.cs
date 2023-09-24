@@ -4,6 +4,6 @@ namespace UserService.Domain.Services
 {
     public interface IUserService
     {
-        Task Create(CreateUser model, CancellationToken token = default);
+        Task Create(CreateUser message, CancellationToken token = default);
     }
 }

@@ -42,5 +42,15 @@ namespace WebMarketCustomer.Controllers
             var result = await _bus.Request<LoginUser, LoginUserResult>(message, token);
             return Ok(result.Message);
         }
+
+
+        [AllowAnonymous]
+        [HttpPost("refresh")]
+        public async Task<IActionResult> Refresh([FromBody] RefreshUserModel model, CancellationToken token = default)
+        {
+            var message = _mapper.Map<RefreshUser>(model);
+            var result = await _bus.Request<RefreshUser, LoginUserResult>(message, token);
+            return Ok(result.Message);
+        }
     }
 }
