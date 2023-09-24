@@ -10,11 +10,10 @@ namespace OrderService.Domain.Mappings
     {
         public OrderProfile()
         {
-            CreateMap<Order, GetOrdersResult.OrderDto>();
-            CreateMap<Order, GetOrderPackageInfoResult>();
-            CreateMap<OrderProduct, GetOrderPackageInfoResult.OrderProductDto>();
-            CreateMap<Product, GetOrderPackageInfoResult.ProductDto>();
-            CreateMap<User, GetOrderPackageInfoResult.UserDto>();
+            CreateMap<Order, GetUserOrdersResult.OrderDto>();
+            CreateMap<Order, GetCarrierOrdersResult.OrderDto>();
+            CreateMap<Order, GetOrderPackageInfoResult.OrderDto>();
+            CreateMap<Order, GetSellerOrdersResult.OrderDto>();
             CreateMap<CreateOrder, Order>()
                 .ForMember(x => x.Products, opt => opt.MapFrom(src => src.CartItemsIds.Select(x => new OrderProduct() { ProductId = x }).ToList()));
         }

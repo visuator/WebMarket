@@ -33,6 +33,14 @@ namespace WebMarketCustomer.Controllers
             return Ok();
         }
 
+        [HttpGet()]
+        public async Task<IActionResult> GetOrders([FromQuery] GetUserOrdersModel model, CancellationToken token = default)
+        {
+            var message = _mapper.Map<GetUserOrders>(model);
+            var result = await _bus.Request<GetUserOrders, GetUserOrdersResult>(message);
+            return Ok(result.Message);
+        }
+
         [HttpGet("{orderId}")]
         public async Task<IActionResult> GetOrderStatus([FromRoute] Guid orderId, CancellationToken token = default)
         {

@@ -6,5 +6,6 @@ namespace ProductService.Domain.Services
     {
         Task<ProductCreated> Add(AddProduct message, CancellationToken token = default);
         Task<FindProductsResult> FindProducts(FindProducts message, CancellationToken token = default);
+        Task<GetCatalogResult> GetCatalog(GetCatalog message, CancellationToken token = default);
     }
 }

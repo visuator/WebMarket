@@ -10,7 +10,9 @@ namespace OrderService.Domain.Mappings
     {
         public OrderProductProfile()
         {
-            CreateMap<OrderProduct, GetOrdersResult.OrderProductDto>();
+            CreateMap<OrderProduct, GetOrderPackageInfoResult.OrderProductDto>();
+            CreateMap<OrderProduct, GetSellerOrdersResult.OrderProductDto>();
+            CreateMap<OrderProduct, GetUserOrdersResult.OrderProductDto>();
         }
     }
 }

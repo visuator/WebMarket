@@ -2,10 +2,15 @@
 {
     public class GetOrderPackageInfoResult
     {
-        public Guid OrderId { get; set; }
-        public List<OrderProductDto> Products { get; set; }
-        public Guid UserId { get; set; }
-        public UserDto User { get; set; }
+        public OrderDto Order { get; set; }
+
+        public class OrderDto
+        {
+            public Guid Id { get; set; }
+            public List<OrderProductDto> Products { get; set; }
+            public Guid UserId { get; set; }
+            public UserDto User { get; set; }
+        }
 
         public class UserDto
         {
@@ -22,7 +27,8 @@
 
         public class OrderProductDto
         {
-            public Guid Id { get; set; }
+            public Guid ProductId { get; set; }
+            public ProductDto Product { get; set; }
         }
     }
 }

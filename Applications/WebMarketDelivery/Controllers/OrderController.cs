@@ -1,9 +1,13 @@
-﻿using MassTransit;
+﻿using AutoMapper;
+
+using MassTransit;
 
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 using WebMarket.Common.Messages;
+
+using WebMarketDelivery.Models;
 
 namespace WebMarketDelivery.Controllers
 {
@@ -13,16 +17,19 @@ namespace WebMarketDelivery.Controllers
     public class OrderController : ControllerBase
     {
         private readonly IBus _bus;
+        private readonly IMapper _mapper;
 
-        public OrderController(IBus bus)
+        public OrderController(IBus bus, IMapper mapper)
         {
             _bus = bus;
+            _mapper = mapper;
         }
 
-        [HttpGet("{orderId}/status")]
-        public async Task<IActionResult> GetOrderStatus([FromRoute] Guid orderId, CancellationToken token = default)
+        [HttpGet()]
+        public async Task<IActionResult> GetOrders([FromQuery] GetCarrierOrdersModel model, CancellationToken token = default)
         {
-            var result = await _bus.Request<GetOrderStatus, GetOrderStatusResult>(new GetOrderStatus() { OrderId = orderId }, token);
+            var message = _mapper.Map<GetCarrierOrders>(model);
+            var result = await _bus.Request<GetCarrierOrders, GetCarrierOrdersResult>(message);
             return Ok(result.Message);
         }
 

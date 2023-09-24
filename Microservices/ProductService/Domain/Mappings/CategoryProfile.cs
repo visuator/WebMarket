@@ -12,6 +12,8 @@ namespace ProductService.Domain.Mappings
         {
             CreateMap<AddCategory, Category>();
             CreateMap<Category, FindProductsResult.CategoryDto>();
+            CreateMap<Category, GetCategoriesResult.CategoryDto>();
+            CreateMap<Category, GetCatalogResult.CategoryDto>();
         }
     }
 }

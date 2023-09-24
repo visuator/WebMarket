@@ -1,8 +1,14 @@
-﻿using WebMarket.Common.Enums;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+using WebMarket.Common.Enums;
 
 namespace WebMarket.Common.Messages
 {
-    public class GetOrdersResult
+    public class GetUserOrdersResult
     {
         public List<OrderDto> Orders { get; set; }
 
@@ -15,7 +21,8 @@ namespace WebMarket.Common.Messages
         public class ProductDto
         {
             public Guid Id { get; set; }
-            public string BarCode { get; set; }
+            public string Name { get; set; }
+            public string Description { get; set; }
         }
 
         public class OrderProductDto

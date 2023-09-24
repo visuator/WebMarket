@@ -13,6 +13,7 @@ namespace ProductService.Domain.Mappings
             CreateMap<AddBrand, Brand>();
             CreateMap<Brand, FindProductsResult.BrandDto>();
             CreateMap<Brand, GetBrandsResult.BrandDto>();
+            CreateMap<Brand, GetCatalogResult.BrandDto>();
         }
     }
 }

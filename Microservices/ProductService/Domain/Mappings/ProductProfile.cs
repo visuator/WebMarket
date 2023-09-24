@@ -13,6 +13,7 @@ namespace ProductService.Domain.Mappings
             CreateMap<AddProduct, Product>();
             CreateMap<Product, FindProductsResult.ProductDto>();
             CreateMap<Product, ProductCreated>();
+            CreateMap<Product, GetCatalogResult.ProductDto>();
         }
     }
 }

@@ -1,8 +1,12 @@
-﻿using MassTransit;
+﻿using AutoMapper;
+
+using MassTransit;
 
 using Microsoft.AspNetCore.Mvc;
 
 using WebMarket.Common.Messages;
+
+using WebMarketSeller.Models;
 
 namespace WebMarketSeller.Controllers
 {
@@ -11,10 +15,12 @@ namespace WebMarketSeller.Controllers
     public class OrderController : ControllerBase
     {
         private readonly IBus _bus;
+        private readonly IMapper _mapper;
 
-        public OrderController(IBus bus)
+        public OrderController(IBus bus, IMapper mapper)
         {
             _bus = bus;
+            _mapper = mapper;
         }
 
         [HttpPatch("{orderId}/build")]
@@ -22,6 +28,14 @@ namespace WebMarketSeller.Controllers
         {
             await _bus.Publish(new BuildOrder() { OrderId = orderId }, token);
             return Ok();
+        }
+
+        [HttpGet()]
+        public async Task<IActionResult> GetAll([FromQuery] GetOrdersModel model, CancellationToken token = default)
+        {
+            var message = _mapper.Map<GetSellerOrders>(model);
+            var result = await _bus.Request<GetSellerOrders, GetSellerOrdersResult>(message, token);
+            return Ok(result.Message);
         }
     }
 }

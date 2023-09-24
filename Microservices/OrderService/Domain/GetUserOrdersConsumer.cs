@@ -6,16 +6,16 @@ using WebMarket.Common.Messages;
 
 namespace OrderService.Domain
 {
-    public class GetOrdersConsumer : IConsumer<GetOrders>
+    public class GetUserOrdersConsumer : IConsumer<GetUserOrders>
     {
         private readonly IOrderService _orderService;
 
-        public GetOrdersConsumer(IOrderService orderService)
+        public GetUserOrdersConsumer(IOrderService orderService)
         {
             _orderService = orderService;
         }
 
-        public async Task Consume(ConsumeContext<GetOrders> context)
+        public async Task Consume(ConsumeContext<GetUserOrders> context)
         {
             var result = await _orderService.GetAll(context.Message, context.CancellationToken);
             await context.RespondAsync(result);

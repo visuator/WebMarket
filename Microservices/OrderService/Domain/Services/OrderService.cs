@@ -16,7 +16,7 @@ namespace OrderService.Domain.Services
     {
         private readonly OrderDbContext _dbContext;
         private readonly IMapper _mapper;
-        private readonly ILogger<OrderService> _logger;
+        private readonly ILogger<OrderService> _logger; 
 
         public OrderService(OrderDbContext dbContext, IMapper mapper, ILogger<OrderService> logger)
         {
@@ -46,10 +46,10 @@ namespace OrderService.Domain.Services
 
         public async Task<GetOrderPackageInfoResult> GetPackageInfo(GetOrderPackageInfo message, CancellationToken token = default)
         {
-            var order = await _dbContext.Orders.AsNoTracking().Include(x => x.User).Include(x => x.Products).ThenInclude(x => x.Product).Where(x => x.Id == message.OrderId).ProjectTo<GetOrderPackageInfoResult>(_mapper.ConfigurationProvider).SingleOrDefaultAsync(token);
+            var order = await _dbContext.Orders.AsNoTracking().Include(x => x.User).Include(x => x.Products).ThenInclude(x => x.Product).Where(x => x.Id == message.OrderId).ProjectTo<GetOrderPackageInfoResult.OrderDto>(_mapper.ConfigurationProvider).SingleOrDefaultAsync(token);
             if (order is null) throw new Exception("Order not found");
 
-            return order;
+            return new() { Order = order };
         }
         public virtual async Task SetStatus(StatusOrder message, CancellationToken token = default)
         {
@@ -61,9 +61,23 @@ namespace OrderService.Domain.Services
             _logger.LogInformation("Order {id} changed status to: {status}", order.Id, message.SetTo);
         }
 
-        public async Task<GetOrdersResult> GetAll(GetOrders message, CancellationToken token = default)
+        public async Task<GetUserOrdersResult> GetAll(GetUserOrders message, CancellationToken token = default)
         {
-            var orders = await _dbContext.Orders.AsNoTracking().Include(x => x.Products).ThenInclude(x => x.Product).Where(x => x.Products.Select(p => p.Product.UserId).Contains(message.UserId)).ApplyOrdering(x => x.Status, message).ProjectTo<GetOrdersResult.OrderDto>(_mapper.ConfigurationProvider).ToListAsync(token);
+            var orders = await _dbContext.Orders.AsNoTracking().Include(x => x.Products).ThenInclude(x => x.Product).Where(x => x.UserId == message.UserId).ApplyOrdering(x => x.Status, message).ProjectTo<GetUserOrdersResult.OrderDto>(_mapper.ConfigurationProvider).ToListAsync(token);
+
+            return new() { Orders = orders };
+        }
+
+        public async Task<GetCarrierOrdersResult> GetAll(GetCarrierOrders message, CancellationToken token = default)
+        {
+            var orders = await _dbContext.Orders.AsNoTracking().Include(x => x.Products).ThenInclude(x => x.Product).Where(x => x.Status == OrderStatus.Built).ApplyOrdering(x => x.Status, message).ProjectTo<GetCarrierOrdersResult.OrderDto>(_mapper.ConfigurationProvider).ToListAsync(token);
+
+            return new() { Orders = orders };
+        }
+
+        public async Task<GetSellerOrdersResult> GetAll(GetSellerOrders message, CancellationToken token = default)
+        {
+            var orders = await _dbContext.Orders.AsNoTracking().Include(x => x.Products).ThenInclude(x => x.Product).Where(x => x.Products.Select(p => p.Product.UserId).Contains(message.UserId)).ApplyOrdering(x => x.Status, message).ProjectTo<GetSellerOrdersResult.OrderDto>(_mapper.ConfigurationProvider).ToListAsync(token);
 
             return new() { Orders = orders };
         }

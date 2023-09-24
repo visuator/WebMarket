@@ -46,5 +46,12 @@ namespace ProductService.Domain.Services
 
             return _mapper.Map<ProductCreated>(entity);
         }
+
+        public async Task<GetCatalogResult> GetCatalog(GetCatalog message, CancellationToken token = default)
+        {
+            var result = await _dbContext.Products.AsNoTracking().Include(x => x.Brand).Include(x => x.Category).Where(x => x.UserId == message.UserId).ProjectTo<GetCatalogResult.ProductDto>(_mapper.ConfigurationProvider).ToListAsync(token);
+
+            return new() { Products = result };
+        }
     }
 }
