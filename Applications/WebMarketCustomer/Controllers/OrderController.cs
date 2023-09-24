@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-using WebMarket.Models;
+using WebMarketCustomer.Models;
 
-namespace WebMarket.Controllers
+namespace WebMarketCustomer.Controllers
 {
     [ApiController]
     [Route("api/orders")]

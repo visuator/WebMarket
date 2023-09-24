@@ -7,7 +7,7 @@ namespace WebMarketDelivery.Controllers
     public class OrderController : ControllerBase
     {
         [HttpPost()]
-        public async Task<IActionResult> CreateOrder()
+        public async Task<IActionResult> BuildOrder()
         {
             return Ok();
         }

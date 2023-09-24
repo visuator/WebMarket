@@ -30,4 +30,9 @@
     <ProjectReference Include="..\..\WebMarket.Common\WebMarket.Common.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Domain\Mappings\" />
+    <Folder Include="Domain\Services\" />
+  </ItemGroup>
+
 </Project>
