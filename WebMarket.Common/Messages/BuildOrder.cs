@@ -8,5 +8,6 @@ namespace WebMarket.Common.Messages
 {
     public class BuildOrder
     {
+        public Guid OrderId { get; set; }
     }
 }

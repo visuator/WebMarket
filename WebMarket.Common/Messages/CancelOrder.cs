@@ -4,9 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using WebMarket.Common.Enums;
+
 namespace WebMarket.Common.Messages
 {
-    internal class CancelOrder
+    public class CancelOrder : StatusOrder
     {
+        public override OrderStatus SetTo { get => OrderStatus.Canceled; }
     }
 }

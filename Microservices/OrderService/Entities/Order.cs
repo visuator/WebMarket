@@ -1,4 +1,5 @@
 ﻿using WebMarket.Common.Entities;
+using WebMarket.Common.Enums;
 
 namespace OrderService.Entities
 {

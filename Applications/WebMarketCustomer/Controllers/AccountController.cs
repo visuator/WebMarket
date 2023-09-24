@@ -16,15 +16,13 @@ namespace WebMarketCustomer.Controllers
     [Route("api/accounts")]
     public class AccountController : ControllerBase
     {
-        private readonly IPublishEndpoint _publish;
-        private readonly IRequestClient<LoginUser> _loginUserRequest;
         private readonly IMapper _mapper;
+        private readonly IBus _bus;
 
-        public AccountController(IPublishEndpoint publish, IMapper mapper, IRequestClient<LoginUser> loginUserRequest)
+        public AccountController(IMapper mapper, IBus bus)
         {
-            _publish = publish;
             _mapper = mapper;
-            _loginUserRequest = loginUserRequest;
+            _bus = bus;
         }
 
         [AllowAnonymous]
@@ -32,7 +30,7 @@ namespace WebMarketCustomer.Controllers
         public async Task<IActionResult> Register([FromBody] CreateUserModel model, CancellationToken token = default)
         {
             var message = _mapper.Map<CreateUser>(model);
-            await _publish.Publish(message, token);
+            await _bus.Publish(message, token);
             return Ok();
         }
 
@@ -41,7 +39,8 @@ namespace WebMarketCustomer.Controllers
         public async Task<IActionResult> Login([FromBody] LoginUserModel model, CancellationToken token = default)
         {
             var message = _mapper.Map<LoginUser>(model);
-            return Ok(await _loginUserRequest.GetResponse<LoginUserResult>(message, token));
+            var result = await _bus.Request<LoginUser, LoginUserResult>(message, token);
+            return Ok(result.Message);
         }
     }
 }

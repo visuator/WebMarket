@@ -10,6 +10,7 @@ namespace ProductService.Entities
         public Guid CategoryId { get; set; }
         public Category Category { get; set; }
         public double Price { get; set; }
+        public string BarCode { get; set; }
         public Guid BrandId { get; set; }
         public Brand Brand { get; set; }
         public Guid UserId { get; set; }

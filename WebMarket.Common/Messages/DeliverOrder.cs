@@ -4,9 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using WebMarket.Common.Enums;
+
 namespace WebMarket.Common.Messages
 {
-    public class DeliverOrder
+    public class DeliverOrder : StatusOrder
     {
+        public override OrderStatus SetTo { get => OrderStatus.Delivered; }
     }
 }

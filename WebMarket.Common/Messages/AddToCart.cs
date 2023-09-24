@@ -8,5 +8,7 @@ namespace WebMarket.Common.Messages
 {
     public class AddToCart
     {
+        public Guid UserId { get; set; }
+        public Guid ProductId { get; set; }
     }
 }

@@ -7,7 +7,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Applications", "Application
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Microservices", "Microservices", "{A127181B-F813-499B-8084-E50C5295E2FB}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebMarket", "Applications\WebMarketCustomer\WebMarket.csproj", "{A0BA895A-ABA2-4DCB-8FE1-CD6B946CCAB8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebMarketCustomer", "Applications\WebMarketCustomer\WebMarketCustomer.csproj", "{A0BA895A-ABA2-4DCB-8FE1-CD6B946CCAB8}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebMarketSeller", "Applications\WebMarketSeller\WebMarketSeller.csproj", "{7B138415-B1E1-4A0C-96BE-A5640A7ACBC3}"
 EndProject

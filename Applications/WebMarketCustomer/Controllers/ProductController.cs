@@ -1,4 +1,6 @@
-﻿using MassTransit;
+﻿using AutoMapper;
+
+using MassTransit;
 
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,17 +14,21 @@ namespace WebMarketCustomer.Controllers
     [Route("api/products")]
     public class ProductController : ControllerBase
     {
-        private readonly IRequestClient<FindProducts> _findProductsRequest;
+        private readonly IMapper _mapper;
+        private readonly IBus _bus;
 
-        public ProductController(IRequestClient<FindProducts> findProductsRequest)
+        public ProductController(IMapper mapper, IBus bus)
         {
-            _findProductsRequest = findProductsRequest;
+            _mapper = mapper;
+            _bus = bus;
         }
 
         [HttpGet()]
         public async Task<IActionResult> FindProducts([FromQuery] FindProductsModel model, CancellationToken token = default)
         {
-            return Ok(await _findProductsRequest.GetResponse<FindProductsResult>(model, token));
+            var message = _mapper.Map<FindProducts>(model);
+            var result = await _bus.Request<FindProducts, FindProductsResult>(model, token);
+            return Ok(result.Message);
         }
     }
 }

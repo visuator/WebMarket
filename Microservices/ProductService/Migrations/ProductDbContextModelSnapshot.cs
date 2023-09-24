@@ -76,6 +76,10 @@ namespace ProductService.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
+                    b.Property<string>("BarCode")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<Guid>("BrandId")
                         .HasColumnType("uuid");
 
