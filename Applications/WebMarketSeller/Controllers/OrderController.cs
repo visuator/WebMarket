@@ -30,6 +30,13 @@ namespace WebMarketSeller.Controllers
             return Ok();
         }
 
+        [HttpPatch("{orderId}/process")]
+        public async Task<IActionResult> Process([FromRoute] Guid orderId, CancellationToken token = default)
+        {
+            await _bus.Publish(new ProcessOrder() { OrderId = orderId }, token);
+            return Ok();
+        }
+
         [HttpGet()]
         public async Task<IActionResult> GetAll([FromQuery] GetOrdersModel model, CancellationToken token = default)
         {

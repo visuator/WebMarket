@@ -11,6 +11,7 @@ namespace WebMarketCustomer.Domain.Mappings
         public OrderProfile()
         {
             CreateMap<CreateOrderModel, CreateOrder>();
+            CreateMap<GetUserOrdersModel, GetUserOrders>();
         }
     }
 }

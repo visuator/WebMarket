@@ -62,12 +62,14 @@ namespace WebMarket.Common.Extensions
             builder.Services.AddHostedService<DbInitHostedService<TDbContext>>();
         }
 
-        public static void ConfigureMassTransit(this WebApplicationBuilder builder, Assembly asm)
+        public static void ConfigureMassTransit(this WebApplicationBuilder builder, Assembly asm, Action<IBusRegistrationConfigurator>? configuration = null)
         {
             builder.Services.Configure<RabbitMqTransportOptions>(builder.Configuration.GetSection("RabbitMq").Bind);
             builder.Services.AddMassTransit(opt =>
             {
                 opt.AddConsumers(asm);
+                configuration?.Invoke(opt);
+
                 opt.UsingRabbitMq((ctx, rabbitMq) =>
                 {
                     rabbitMq.ConfigureEndpoints(ctx);

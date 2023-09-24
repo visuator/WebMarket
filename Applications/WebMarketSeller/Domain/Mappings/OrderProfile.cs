@@ -10,7 +10,7 @@ namespace WebMarketSeller.Domain.Mappings
     {
         public OrderProfile()
         {
-            CreateMap<GetOrdersModel, GetUserOrders>();
+            CreateMap<GetOrdersModel, GetSellerOrders>();
         }
     }
 }
