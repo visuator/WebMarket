@@ -19,5 +19,13 @@ namespace OrderService.Domain
         {
             await _userService.Create(context.Message, context.CancellationToken);
         }
+
+        public class Definition : ConsumerDefinition<UserCreatedConsumer>
+        {
+            public Definition()
+            {
+                Endpoint(x => x.Name = $"{nameof(UserCreated)}OrderConsumer");
+            }
+        }
     }
 }
