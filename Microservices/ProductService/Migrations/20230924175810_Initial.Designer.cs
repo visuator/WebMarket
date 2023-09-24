@@ -12,7 +12,7 @@ using ProductService.Storages;
 namespace ProductService.Migrations
 {
     [DbContext(typeof(ProductDbContext))]
-    [Migration("20230924162656_Initial")]
+    [Migration("20230924175810_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -154,7 +154,7 @@ namespace ProductService.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("User");
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("ProductService.Entities.Brand", b =>

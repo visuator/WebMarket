@@ -1,5 +1,7 @@
 version: '3.4'
 
+volumes:
+  pgadmin-data:
 services:
   productservice:
     image: ${DOCKER_REGISTRY-}productservice
@@ -46,3 +48,13 @@ services:
     environment:
       POSTGRES_PASSWORD: postgres
       POSTGRES_USER: postgres
+  pgadmin:
+    image: dpage/pgadmin4
+    restart: always
+    ports:
+      - 5650:80
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@webmarket.ru
+      PGADMIN_DEFAULT_PASSWORD: admin
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
