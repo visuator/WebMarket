@@ -1,12 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace WebMarket.Common.Infrastructure
 {
@@ -14,8 +9,8 @@ namespace WebMarket.Common.Infrastructure
     {
         public Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
         {
-            var user = context.HttpContext.User.Claims.Where(x => x.Type == ClaimTypes.Sid).Select(x => new { UserId = Guid.Parse(x.Value)}).SingleOrDefault();
-            foreach(var i in context.ActionArguments.Values.OfType<IAuthenticated>().AsEnumerable())
+            var user = context.HttpContext.User.Claims.Where(x => x.Type == ClaimTypes.Sid).Select(x => new { UserId = Guid.Parse(x.Value) }).SingleOrDefault();
+            foreach (var i in context.ActionArguments.Values.OfType<IAuthenticated>().AsEnumerable())
             {
                 if (user is null)
                 {

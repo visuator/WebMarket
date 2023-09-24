@@ -9,6 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddScoped<IUserProductService, UserProductService>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IProductService, ProductService>();
 
 builder.ConfigureDbContext<CartDbContext>(Assembly.GetExecutingAssembly());
 builder.ConfigureInfrastructure(Assembly.GetExecutingAssembly());

@@ -1,7 +1,6 @@
 ﻿using MassTransit;
 
 using ProductService.Domain.Services;
-using ProductService.Entities;
 
 using WebMarket.Common.Messages;
 

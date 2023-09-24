@@ -40,13 +40,6 @@ namespace WebMarketDelivery.Controllers
             return Ok();
         }
 
-        [HttpPatch("{orderId}/build")]
-        public async Task<IActionResult> Build([FromRoute] Guid orderId, CancellationToken token = default)
-        {
-            await _bus.Publish(new BuildOrder() { OrderId = orderId }, token);
-            return Ok();
-        }
-
         [HttpDelete("{orderId}/return")]
         public async Task<IActionResult> Return([FromRoute] Guid orderId, CancellationToken token = default)
         {

@@ -14,6 +14,7 @@ namespace CartService.Domain.Mappings
             CreateMap<UserProduct, GetCartProductsResult.UserProductDto>();
             CreateMap<User, GetCartProductsResult.UserDto>();
             CreateMap<Product, GetCartProductsResult.ProductDto>();
+            CreateMap<ProductCreated, Product>();
         }
     }
 }

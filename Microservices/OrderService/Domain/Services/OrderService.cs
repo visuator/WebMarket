@@ -8,6 +8,7 @@ using OrderService.Storages;
 
 using WebMarket.Common.Enums;
 using WebMarket.Common.Messages;
+using WebMarket.Common.Services;
 
 namespace OrderService.Domain.Services
 {
@@ -39,6 +40,7 @@ namespace OrderService.Domain.Services
         {
             var order = await _dbContext.Orders.AsNoTracking().Where(x => x.Id == message.OrderId).SingleOrDefaultAsync(token);
             if (order is null) throw new Exception("Order not found");
+
             return new() { Status = order.Status };
         }
 
@@ -46,6 +48,7 @@ namespace OrderService.Domain.Services
         {
             var order = await _dbContext.Orders.AsNoTracking().Include(x => x.User).Include(x => x.Products).ThenInclude(x => x.Product).Where(x => x.Id == message.OrderId).ProjectTo<GetOrderPackageInfoResult>(_mapper.ConfigurationProvider).SingleOrDefaultAsync(token);
             if (order is null) throw new Exception("Order not found");
+
             return order;
         }
         public virtual async Task SetStatus(StatusOrder message, CancellationToken token = default)
@@ -56,6 +59,13 @@ namespace OrderService.Domain.Services
             await _dbContext.SaveChangesAsync(token);
 
             _logger.LogInformation("Order {id} changed status to: {status}", order.Id, message.SetTo);
+        }
+
+        public async Task<GetOrdersResult> GetAll(GetOrders message, CancellationToken token = default)
+        {
+            var orders = await _dbContext.Orders.AsNoTracking().Include(x => x.Products).ThenInclude(x => x.Product).Where(x => x.Products.Select(p => p.Product.UserId).Contains(message.UserId)).ApplyOrdering(x => x.Status, message).ProjectTo<GetOrdersResult.OrderDto>(_mapper.ConfigurationProvider).ToListAsync(token);
+
+            return new() { Orders = orders };
         }
     }
 }

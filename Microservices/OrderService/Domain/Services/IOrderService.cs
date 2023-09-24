@@ -7,6 +7,7 @@ namespace OrderService.Domain.Services
         Task Create(CreateOrder message, CancellationToken token = default);
         Task<GetOrderStatusResult> GetStatus(GetOrderStatus message, CancellationToken token = default);
         Task<GetOrderPackageInfoResult> GetPackageInfo(GetOrderPackageInfo message, CancellationToken token = default);
-        Task SetStatus(StatusOrder order, CancellationToken token = default);
+        Task SetStatus(StatusOrder message, CancellationToken token = default);
+        Task<GetOrdersResult> GetAll(GetOrders message, CancellationToken token = default);
     }
 }

@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 
 using ProductService.Entities;
+
 using WebMarket.Common.Messages;
 
 namespace ProductService.Domain.Mappings
@@ -9,6 +10,7 @@ namespace ProductService.Domain.Mappings
     {
         public BrandProfile()
         {
+            CreateMap<AddBrand, Brand>();
             CreateMap<Brand, FindProductsResult.BrandDto>();
             CreateMap<Brand, GetBrandsResult.BrandDto>();
         }

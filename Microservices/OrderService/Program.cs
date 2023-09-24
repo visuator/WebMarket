@@ -9,6 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddScoped<IOrderService, OrderService.Domain.Services.OrderService>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IProductService, ProductService>();
 
 builder.ConfigureDbContext<OrderDbContext>(Assembly.GetExecutingAssembly());
 builder.ConfigureInfrastructure(Assembly.GetExecutingAssembly());

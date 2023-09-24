@@ -1,6 +1,4 @@
-﻿using UserService.Entities;
-
-using WebMarket.Common.Messages;
+﻿using WebMarket.Common.Messages;
 
 namespace UserService.Domain.Services
 {
