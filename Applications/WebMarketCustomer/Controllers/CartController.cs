@@ -51,9 +51,10 @@ namespace WebMarketCustomer.Controllers
         /// <returns></returns>
         [HttpPost("{productId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> AddToCart([FromRoute] Guid productId, CancellationToken token = default)
+        public async Task<IActionResult> AddToCart([FromBody] AddToCartModel model, CancellationToken token = default)
         {
-            await _bus.Publish(new AddToCart() { ProductId = productId }, token);
+            var message = _mapper.Map<AddToCart>(model);
+            await _bus.Publish(message, token);
             return Ok();
         }
     }

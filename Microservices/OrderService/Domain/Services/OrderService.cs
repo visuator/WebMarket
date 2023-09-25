@@ -36,7 +36,8 @@ namespace OrderService.Domain.Services
 
             _logger.LogInformation("Order created: {id}", entity.Id);
 
-            return await _dbContext.Orders.AsNoTracking().Include(x => x.User).Include(x => x.Products).ThenInclude(x => x.Product).ProjectTo<OrderCreated>(_mapper.ConfigurationProvider).SingleAsync(token);
+            var result = await _dbContext.Orders.AsNoTracking().Include(x => x.User).Include(x => x.Products).ThenInclude(x => x.Product).Where(x => x.Id == entity.Id).ProjectTo<OrderCreated.OrderDto>(_mapper.ConfigurationProvider).SingleAsync(token);
+            return new() { Order = result };
         }
         public async Task<GetOrderStatusResult> GetStatus(GetOrderStatus message, CancellationToken token = default)
         {

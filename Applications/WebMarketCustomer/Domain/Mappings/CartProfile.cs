@@ -11,6 +11,7 @@ namespace WebMarketCustomer.Domain.Mappings
         public CartProfile()
         {
             CreateMap<GetCartProductsModel, GetCartProducts>();
+            CreateMap<AddToCartModel, AddToCart>();
         }
     }
 }
