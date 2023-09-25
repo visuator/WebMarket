@@ -14,6 +14,7 @@ namespace OrderService.Domain.Mappings
             CreateMap<Product, GetUserOrdersResult.ProductDto>();
             CreateMap<Product, GetSellerOrdersResult.ProductDto>();
             CreateMap<ProductCreated, Product>();
+            CreateMap<Product, OrderCreated.ProductDto>();
         }
     }
 }

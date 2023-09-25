@@ -10,6 +10,7 @@ namespace OrderService.Domain.Mappings
     {
         public OrderProfile()
         {
+            CreateMap<Order, OrderCreated.OrderDto>();
             CreateMap<Order, GetUserOrdersResult.OrderDto>();
             CreateMap<Order, GetCarrierOrdersResult.OrderDto>();
             CreateMap<Order, GetOrderPackageInfoResult.OrderDto>();

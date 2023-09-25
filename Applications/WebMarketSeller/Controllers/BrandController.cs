@@ -11,6 +11,9 @@ using WebMarketSeller.Models;
 
 namespace WebMarketSeller.Controllers
 {
+    /// <summary>
+    /// Контроллер работы с марками
+    /// </summary>
     [Authorize]
     [ApiController]
     [Route("api/brands")]
@@ -25,7 +28,14 @@ namespace WebMarketSeller.Controllers
             _mapper = mapper;
         }
 
+        /// <summary>
+        /// Добавляет марку
+        /// </summary>
+        /// <param name="model">Запрос</param>
+        /// <param name="token">CancellationToken</param>
+        /// <returns></returns>
         [HttpPost()]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> Add([FromBody] AddBrandModel model, CancellationToken token = default)
         {
             var message = _mapper.Map<AddBrand>(model);
@@ -33,7 +43,14 @@ namespace WebMarketSeller.Controllers
             return Ok();
         }
 
+        /// <summary>
+        /// Получает все марки продавца
+        /// </summary>
+        /// <param name="model">Запрос</param>
+        /// <param name="token">CancellationToken</param>
+        /// <returns></returns>
         [HttpGet()]
+        [ProducesResponseType(typeof(GetBrandsResult), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetAll([FromQuery] GetBrandsModel model, CancellationToken token = default)
         {
             var message = _mapper.Map<GetBrands>(model);

@@ -1,5 +1,6 @@
 ﻿using MassTransit;
 
+using UserService.Domain.Exceptions;
 using UserService.Domain.Services;
 
 using WebMarket.Common.Messages;
@@ -17,8 +18,13 @@ namespace UserService.Domain
 
         public async Task Consume(ConsumeContext<CreateUser> context)
         {
-            var result = await _userService.Create(context.Message, context.CancellationToken);
-            await context.Publish(result, context.CancellationToken);
+            try
+            {
+                var result = await _userService.Create(context.Message, context.CancellationToken);
+                await context.Publish(result, context.CancellationToken);
+            }
+            catch (UserAlreadyExistsException) { await context.RespondAsync(new UserAlreadyExists()); }
+            finally { await context.RespondAsync(new CreateUserResult()); }
         }
     }
 }

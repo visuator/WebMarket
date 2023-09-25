@@ -17,7 +17,8 @@ namespace OrderService.Domain
 
         public async Task Consume(ConsumeContext<CreateOrder> context)
         {
-            await _orderService.Create(context.Message, context.CancellationToken);
+            var result = await _orderService.Create(context.Message, context.CancellationToken);
+            await context.Publish(result, context.CancellationToken);
         }
     }
 }

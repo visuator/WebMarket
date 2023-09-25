@@ -11,6 +11,9 @@ using WebMarketCustomer.Models;
 
 namespace WebMarketCustomer.Controllers
 {
+    /// <summary>
+    /// Контроллер работы с товарами
+    /// </summary>
     [Authorize]
     [ApiController]
     [Route("api/products")]
@@ -25,7 +28,14 @@ namespace WebMarketCustomer.Controllers
             _bus = bus;
         }
 
+        /// <summary>
+        /// Поиск товаров
+        /// </summary>
+        /// <param name="model">Запрос</param>
+        /// <param name="token">CancellationToken</param>
+        /// <returns></returns>
         [HttpGet()]
+        [ProducesResponseType(typeof(FindProductsResult), StatusCodes.Status200OK)]
         public async Task<IActionResult> FindProducts([FromQuery] FindProductsModel model, CancellationToken token = default)
         {
             var message = _mapper.Map<FindProducts>(model);

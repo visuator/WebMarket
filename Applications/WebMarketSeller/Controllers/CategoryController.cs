@@ -11,6 +11,9 @@ using WebMarketSeller.Models;
 
 namespace WebMarketSeller.Controllers
 {
+    /// <summary>
+    /// Контроллер работы с категориями
+    /// </summary>
     [Authorize]
     [ApiController]
     [Route("api/category")]
@@ -25,7 +28,14 @@ namespace WebMarketSeller.Controllers
             _mapper = mapper;
         }
 
+        /// <summary>
+        /// Добавляет категорию
+        /// </summary>
+        /// <param name="model">Запрос</param>
+        /// <param name="token">CancellationToken</param>
+        /// <returns></returns>
         [HttpPost()]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> Add([FromBody] AddCategoryModel model, CancellationToken token = default)
         {
             var message = _mapper.Map<AddCategory>(model);
@@ -33,7 +43,14 @@ namespace WebMarketSeller.Controllers
             return Ok();
         }
 
+        /// <summary>
+        /// Получает все категории
+        /// </summary>
+        /// <param name="model">Запрос</param>
+        /// <param name="token">CancellationToken</param>
+        /// <returns></returns>
         [HttpGet()]
+        [ProducesResponseType(typeof(GetCategoriesResult), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetAll([FromQuery] GetCategoriesModel model, CancellationToken token = default)
         {
             var message = _mapper.Map<GetCategories>(model);

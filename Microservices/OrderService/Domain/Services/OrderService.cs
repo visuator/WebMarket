@@ -25,7 +25,7 @@ namespace OrderService.Domain.Services
             _logger = logger;
         }
 
-        public async Task Create(CreateOrder message, CancellationToken token = default)
+        public async Task<OrderCreated> Create(CreateOrder message, CancellationToken token = default)
         {
             var entity = _mapper.Map<Order>(message, opt => opt.AfterMap((_, dst) =>
             {
@@ -35,6 +35,8 @@ namespace OrderService.Domain.Services
             await _dbContext.SaveChangesAsync(token);
 
             _logger.LogInformation("Order created: {id}", entity.Id);
+
+            return await _dbContext.Orders.AsNoTracking().Include(x => x.User).Include(x => x.Products).ThenInclude(x => x.Product).ProjectTo<OrderCreated>(_mapper.ConfigurationProvider).SingleAsync(token);
         }
         public async Task<GetOrderStatusResult> GetStatus(GetOrderStatus message, CancellationToken token = default)
         {

@@ -11,6 +11,9 @@ using WebMarketCustomer.Models;
 
 namespace WebMarketCustomer.Controllers
 {
+    /// <summary>
+    /// Контроллер корзины товаров
+    /// </summary>
     [Authorize]
     [ApiController]
     [Route("api/cart")]
@@ -25,7 +28,14 @@ namespace WebMarketCustomer.Controllers
             _bus = bus;
         }
 
+        /// <summary>
+        /// Получает список товаров
+        /// </summary>
+        /// <param name="model">Запрос</param>
+        /// <param name="token">CancellationToken</param>
+        /// <returns></returns>
         [HttpGet()]
+        [ProducesResponseType(typeof(GetCartProductsResult, StatusCodes.Status200OK))]
         public async Task<IActionResult> GetCart([FromQuery] GetCartProductsModel model, CancellationToken token = default)
         {
             var message = _mapper.Map<GetCartProducts>(model);
@@ -33,7 +43,14 @@ namespace WebMarketCustomer.Controllers
             return Ok(result.Message);
         }
 
+        /// <summary>
+        /// Добавляет товар в корзину
+        /// </summary>
+        /// <param name="productId">Запрос</param>
+        /// <param name="token">CancellationToken</param>
+        /// <returns></returns>
         [HttpPost("{productId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> AddToCart([FromRoute] Guid productId, CancellationToken token = default)
         {
             await _bus.Publish(new AddToCart() { ProductId = productId }, token);

@@ -11,6 +11,9 @@ using WebMarketSeller.Models;
 
 namespace WebMarketSeller.Controllers
 {
+    /// <summary>
+    /// Контроллер работы с товарами
+    /// </summary>
     [Authorize]
     [ApiController]
     [Route("api/products")]
@@ -25,7 +28,14 @@ namespace WebMarketSeller.Controllers
             _mapper = mapper;
         }
 
+        /// <summary>
+        /// Добавляет товар к продавцу
+        /// </summary>
+        /// <param name="model">Запрос</param>
+        /// <param name="token">CancellationToken</param>
+        /// <returns></returns>
         [HttpPost()]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> AddProduct([FromBody] AddProductModel model, CancellationToken token = default)
         {
             var message = _mapper.Map<AddProduct>(model);

@@ -12,6 +12,7 @@ namespace OrderService.Domain.Mappings
         {
             CreateMap<User, GetOrderPackageInfoResult.UserDto>();
             CreateMap<UserCreated, User>();
+            CreateMap<User, OrderCreated.UserDto>();
         }
     }
 }
