@@ -22,7 +22,8 @@ namespace UserService.Domain
             {
                 var model = await _userService.Login(context.Message, context.CancellationToken);
                 await context.RespondAsync(model);
-            } catch(UserNotFoundException) { await context.RespondAsync(new UserNotFound()); }
+            }
+            catch (UserNotFoundException) { await context.RespondAsync(new UserNotFound()); }
         }
     }
 }

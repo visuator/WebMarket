@@ -55,7 +55,7 @@ namespace UserService.Domain.Services
         {
             var user = await _dbContext.Users.Include(x => x.Sessions).Where(x => x.Email.Trim() == message.Email.Trim()).SingleOrDefaultAsync(token);
             if (user is null) throw new UserNotFoundException();
-            if(!HashHelper.Encrypt(message.Password, user.PasswordSalt).SequenceEqual(user.PasswordHash)) throw new UserNotFoundException();
+            if (!HashHelper.Encrypt(message.Password, user.PasswordSalt).SequenceEqual(user.PasswordHash)) throw new UserNotFoundException();
 
             var (expiration, jwtToken) = GenerateJwt(user);
             var refreshToken = HashHelper.RandomToken();
