@@ -4,8 +4,8 @@ using WebMarket.Common.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.ConfigureApi();
 builder.ConfigureAuthentication();
+builder.ConfigureApi(Assembly.GetExecutingAssembly());
 builder.ConfigureInfrastructure(Assembly.GetExecutingAssembly());
 builder.ConfigureMassTransit(Assembly.GetExecutingAssembly());
 

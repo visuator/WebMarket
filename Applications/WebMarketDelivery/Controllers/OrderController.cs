@@ -35,7 +35,7 @@ namespace WebMarketDelivery.Controllers
         /// <param name="token">CancellationToken</param>
         /// <returns></returns>
         [HttpGet()]
-        [ProducesResponseType(typeof(GetCarrierOrdersResult), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> GetOrders([FromQuery] GetCarrierOrdersModel model, CancellationToken token = default)
         {
             var message = _mapper.Map<GetCarrierOrders>(model);
@@ -50,7 +50,7 @@ namespace WebMarketDelivery.Controllers
         /// <param name="token">CancellationToken</param>
         /// <returns></returns>
         [HttpGet("{orderId}/package")]
-        [ProducesResponseType(typeof(GetOrderPackageInfoResult), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> GetOrderPackageInfo([FromRoute] Guid orderId, CancellationToken token = default)
         {
             var result = await _bus.Request<GetOrderPackageInfo, GetOrderPackageInfoResult>(new GetOrderPackageInfo() { OrderId = orderId }, token);
@@ -82,20 +82,6 @@ namespace WebMarketDelivery.Controllers
         public async Task<IActionResult> Return([FromRoute] Guid orderId, CancellationToken token = default)
         {
             await _bus.Publish(new ReturnOrder() { OrderId = orderId }, token);
-            return Ok();
-        }
-
-        /// <summary>
-        /// Сборка заказа
-        /// </summary>
-        /// <param name="orderId">Запрос</param>
-        /// <param name="token">CancellationToken</param>
-        /// <returns></returns>
-        [HttpPatch("{orderId}/build")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> Build([FromRoute] Guid orderId, CancellationToken token = default)
-        {
-            await _bus.Publish(new BuildOrder() { OrderId = orderId }, token);
             return Ok();
         }
     }

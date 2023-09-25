@@ -12,17 +12,20 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddScoped<IOrderService, OrderService.Domain.Services.OrderService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<IOrderProductService, OrderProductService>();
 
 builder.ConfigureDbContext<OrderDbContext>(Assembly.GetExecutingAssembly());
 builder.ConfigureInfrastructure(Assembly.GetExecutingAssembly());
 builder.ConfigureMassTransit(Assembly.GetExecutingAssembly(), cfg =>
 {
-    cfg.AddConsumer<StatusOrderConsumer<BuildOrder>>();
     cfg.AddConsumer<StatusOrderConsumer<DeliverOrder>>();
     cfg.AddConsumer<StatusOrderConsumer<ReturnOrder>>();
     cfg.AddConsumer<StatusOrderConsumer<CancelOrder>>();
-    cfg.AddConsumer<StatusOrderConsumer<ProcessOrder>>();
     cfg.AddConsumer<StatusOrderConsumer<ReceiveOrder>>();
+
+    cfg.AddConsumer<StatusOrderProductConsumer<ProcessOrderProduct>>();
+    cfg.AddConsumer<StatusOrderProductConsumer<BuildOrderProduct>>();
+    cfg.AddConsumer<StatusOrderProductConsumer<ReturnOrderProduct>>();
 });
 
 var app = builder.Build();

@@ -46,5 +46,17 @@ namespace CartService.Domain.Services
             var result = await _dbContext.UserProducts.AsNoTracking().Where(x => x.UserId == message.UserId).ApplyOrdering(x => x.CreatedAt, message).ProjectTo<GetCartProductsResult.UserProductDto>(_mapper.ConfigurationProvider).ToListAsync(token);
             return new() { Products = result };
         }
+
+        public async Task Remove(OrderCreated message, CancellationToken token = default)
+        {
+            var userProducts = await _dbContext.UserProducts.Where(x => message.Order.Products.Select(x => x.ProductId).Contains(x.ProductId) && x.UserId == message.Order.UserId).ToListAsync(token);
+
+            foreach (var up in userProducts)
+                up.IsDeleted = true;
+
+            await _dbContext.SaveChangesAsync(token);
+
+            _logger.LogInformation("User products deleted for user: {id}", message.Order.UserId);
+        }
     }
 }

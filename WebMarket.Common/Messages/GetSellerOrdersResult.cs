@@ -4,7 +4,7 @@ namespace WebMarket.Common.Messages
 {
     public class GetSellerOrdersResult
     {
-        public List<OrderDto> Orders { get; set; }
+        public List<OrderProductDto> OrderProducts { get; set; }
 
         public class OrderDto
         {
@@ -25,6 +25,7 @@ namespace WebMarket.Common.Messages
             public OrderDto Order { get; set; }
             public Guid ProductId { get; set; }
             public ProductDto Product { get; set; }
+            public OrderProductStatus Status { get; set; }
         }
     }
 }

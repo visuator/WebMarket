@@ -35,7 +35,7 @@ namespace WebMarketCustomer.Controllers
         /// <param name="token">CancellationToken</param>
         /// <returns></returns>
         [HttpGet()]
-        [ProducesResponseType(typeof(FindProductsResult), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> FindProducts([FromQuery] FindProductsModel model, CancellationToken token = default)
         {
             var message = _mapper.Map<FindProducts>(model);

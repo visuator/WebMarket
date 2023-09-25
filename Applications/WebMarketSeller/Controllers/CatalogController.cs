@@ -35,7 +35,7 @@ namespace WebMarketSeller.Controllers
         /// <param name="token">CancellationToken</param>
         /// <returns></returns>
         [HttpGet()]
-        [ProducesResponseType(typeof(GetCatalogResult), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> Get([FromQuery] GetCatalogModel model, CancellationToken token = default)
         {
             var message = _mapper.Map<GetCatalog>(model);

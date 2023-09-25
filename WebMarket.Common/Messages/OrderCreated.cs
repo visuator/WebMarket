@@ -46,6 +46,7 @@ namespace WebMarket.Common.Messages
             public OrderDto Order { get; set; }
             public Guid ProductId { get; set; }
             public ProductDto Product { get; set; }
+            public OrderProductStatus Status { get; set; }
         }
     }
 }

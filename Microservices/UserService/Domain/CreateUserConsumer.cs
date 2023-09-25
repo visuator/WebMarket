@@ -22,9 +22,9 @@ namespace UserService.Domain
             {
                 var result = await _userService.Create(context.Message, context.CancellationToken);
                 await context.Publish(result, context.CancellationToken);
+                await context.RespondAsync(new CreateUserResult());
             }
             catch (UserAlreadyExistsException) { await context.RespondAsync(new UserAlreadyExists()); }
-            finally { await context.RespondAsync(new CreateUserResult()); }
         }
     }
 }

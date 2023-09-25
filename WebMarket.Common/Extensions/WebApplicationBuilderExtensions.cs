@@ -83,7 +83,7 @@ namespace WebMarket.Common.Extensions
             builder.Services.AddLogging();
         }
 
-        public static void ConfigureApi(this WebApplicationBuilder builder)
+        public static void ConfigureApi(this WebApplicationBuilder builder, Assembly asm)
         {
             builder.Services.AddScoped<AuthenticatedActionFilter>();
             builder.Services.AddControllers(opt =>
@@ -106,6 +106,12 @@ namespace WebMarket.Common.Extensions
                     }
                 };
 
+                try
+                {
+                    foreach (var filePath in Directory.GetFiles(Path.Combine(Path.GetDirectoryName(asm.Location)), "*.xml"))
+                        setup.IncludeXmlComments(filePath);
+                }
+                catch { }
                 setup.AddSecurityDefinition(jwtSecurityScheme.Reference.Id, jwtSecurityScheme);
                 setup.AddSecurityRequirement(new() { { jwtSecurityScheme, Array.Empty<string>() } });
             });

@@ -20,12 +20,16 @@ namespace WebMarketCustomer.Controllers
     public class AccountController : ControllerBase
     {
         private readonly IMapper _mapper;
-        private readonly IBus _bus;
+        private readonly IRequestClient<CreateUser> _createUserRequest;
+        private readonly IRequestClient<LoginUser> _loginUserRequest;
+        private readonly IRequestClient<RefreshUser> _refreshUserRequest;
 
-        public AccountController(IMapper mapper, IBus bus)
+        public AccountController(IMapper mapper, IRequestClient<CreateUser> createUserRequest, IRequestClient<LoginUser> loginUserRequest, IRequestClient<RefreshUser> refreshUserRequest)
         {
             _mapper = mapper;
-            _bus = bus;
+            _createUserRequest = createUserRequest;
+            _loginUserRequest = loginUserRequest;
+            _refreshUserRequest = refreshUserRequest;
         }
 
         /// <summary>
@@ -37,10 +41,11 @@ namespace WebMarketCustomer.Controllers
         [AllowAnonymous]
         [HttpPost("register")]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Register([FromBody] CreateUserModel model, CancellationToken token = default)
         {
             var message = _mapper.Map<CreateUser>(model);
-            Response result = await _bus.Request<CreateUser, UserAlreadyExists>(message, token);
+            Response result = await _createUserRequest.GetResponse<CreateUserResult, UserAlreadyExists>(message, token);
             return result switch
             {
                 (_, UserAlreadyExists) => BadRequest("Такой пользователь уже зарегистрирован!"),
@@ -57,12 +62,17 @@ namespace WebMarketCustomer.Controllers
         /// <returns></returns>
         [AllowAnonymous]
         [HttpPost("login")]
-        [ProducesResponseType(typeof(LoginUserResult), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> Login([FromBody] LoginUserModel model, CancellationToken token = default)
         {
             var message = _mapper.Map<LoginUser>(model);
-            var result = await _bus.Request<LoginUser, LoginUserResult>(message, token);
-            return Ok(result.Message);
+            Response result = await _loginUserRequest.GetResponse<LoginUserResult, UserNotFound>(message, token);
+            return result switch
+            {
+                (_, UserNotFound) => BadRequest("Пользователь не найден и/или неправильный пароль"),
+                (_, LoginUserResult e) => Ok(e),
+                _ => BadRequest(),
+            };
         }
 
         /// <summary>
@@ -73,12 +83,17 @@ namespace WebMarketCustomer.Controllers
         /// <returns></returns>
         [AllowAnonymous]
         [HttpPost("refresh")]
-        [ProducesResponseType(typeof(LoginUserResult), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> Refresh([FromBody] RefreshUserModel model, CancellationToken token = default)
         {
             var message = _mapper.Map<RefreshUser>(model);
-            var result = await _bus.Request<RefreshUser, LoginUserResult>(message, token);
-            return Ok(result.Message);
+            Response result = await _refreshUserRequest.GetResponse<LoginUserResult, UserNotFound>(message, token);
+            return result switch
+            {
+                (_, UserNotFound) => BadRequest("Пользователь не найден"),
+                (_, LoginUserResult e) => Ok(e),
+                _ => BadRequest(),
+            };
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using MassTransit;
 
+using UserService.Domain.Exceptions;
 using UserService.Domain.Services;
 
 using WebMarket.Common.Messages;
@@ -17,8 +18,11 @@ namespace UserService.Domain
 
         public async Task Consume(ConsumeContext<LoginUser> context)
         {
-            var model = await _userService.Login(context.Message, context.CancellationToken);
-            await context.RespondAsync(model);
+            try
+            {
+                var model = await _userService.Login(context.Message, context.CancellationToken);
+                await context.RespondAsync(model);
+            } catch(UserNotFoundException) { await context.RespondAsync(new UserNotFound()); }
         }
     }
 }

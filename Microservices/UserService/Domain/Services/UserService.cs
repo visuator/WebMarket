@@ -7,6 +7,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 
+using UserService.Domain.Exceptions;
 using UserService.Entities;
 using UserService.Services;
 using UserService.Storages;
@@ -33,6 +34,9 @@ namespace UserService.Domain.Services
 
         public async Task<UserCreated> Create(CreateUser message, CancellationToken token = default)
         {
+            var exists = await _dbContext.Users.AsNoTracking().Where(x => x.Email == message.Email).AnyAsync(token);
+            if (exists) throw new UserAlreadyExistsException();
+
             var entity = _mapper.Map<CreateUser, User>(message, opt => opt.AfterMap((src, dst) =>
             {
                 var (hash, salt) = HashHelper.Encrypt(src.Password);
@@ -50,7 +54,8 @@ namespace UserService.Domain.Services
         public async Task<LoginUserResult> Login(LoginUser message, CancellationToken token = default)
         {
             var user = await _dbContext.Users.Include(x => x.Sessions).Where(x => x.Email.Trim() == message.Email.Trim()).SingleOrDefaultAsync(token);
-            if (user is null) throw new Exception("User not found");
+            if (user is null) throw new UserNotFoundException();
+            if(!HashHelper.Encrypt(message.Password, user.PasswordSalt).SequenceEqual(user.PasswordHash)) throw new UserNotFoundException();
 
             var (expiration, jwtToken) = GenerateJwt(user);
             var refreshToken = HashHelper.RandomToken();
@@ -64,7 +69,7 @@ namespace UserService.Domain.Services
         public async Task<LoginUserResult> Refresh(RefreshUser message, CancellationToken token = default)
         {
             var session = await _dbContext.Sessions.Include(x => x.User).Where(x => x.RefreshToken == message.RefreshToken).SingleOrDefaultAsync(token);
-            if (session is null) throw new Exception("Session not found");
+            if (session is null) throw new UserNotFoundException();
 
             var (expiration, jwtToken) = GenerateJwt(session.User);
             session.AccessToken = jwtToken;

@@ -50,7 +50,7 @@ namespace WebMarketCustomer.Controllers
         /// <param name="token">CancellationToken</param>
         /// <returns></returns>
         [HttpGet()]
-        [ProducesResponseType(typeof(GetUserOrdersResult), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> GetOrders([FromQuery] GetUserOrdersModel model, CancellationToken token = default)
         {
             var message = _mapper.Map<GetUserOrders>(model);
@@ -65,7 +65,7 @@ namespace WebMarketCustomer.Controllers
         /// <param name="token">CancellationToken</param>
         /// <returns></returns>
         [HttpGet("{orderId}")]
-        [ProducesResponseType(typeof(GetOrderStatusResult), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> GetOrderStatus([FromRoute] Guid orderId, CancellationToken token = default)
         {
             var result = await _bus.Request<GetOrderStatus, GetOrderStatusResult>(new GetOrderStatus() { OrderId = orderId }, token);

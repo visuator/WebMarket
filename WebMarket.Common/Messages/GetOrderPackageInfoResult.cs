@@ -1,4 +1,6 @@
-﻿namespace WebMarket.Common.Messages
+﻿using WebMarket.Common.Enums;
+
+namespace WebMarket.Common.Messages
 {
     public class GetOrderPackageInfoResult
     {
@@ -29,6 +31,7 @@
         {
             public Guid ProductId { get; set; }
             public ProductDto Product { get; set; }
+            public OrderProductStatus Status { get; set; }
         }
     }
 }
